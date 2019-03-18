@@ -1,14 +1,13 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const asyncHandler = require('express-async-handler');
-const util = require('util');
 
 const app = express();
 const router = express.Router();
 
 require('dotenv').config({ path: 'config.env' });
 
-var con = {
+const con = {
   host: 'localhost',
   user: 'root',
   password: process.env.SQL_PASSWD,
@@ -54,7 +53,6 @@ const getArticles = async () => {
 
 router.get('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-
   next();
 });
 
@@ -70,5 +68,5 @@ app.use(router);
 const hostname = 'localhost';
 const port = 3333;
 app.listen(port, hostname, function() {
-  console.log('Mon serveur fonctionne sur http://' + hostname + ':' + port);
+  console.log('Server running at http://' + hostname + ':' + port);
 });
