@@ -1,27 +1,23 @@
 const express = require('express');
-const Sequelize = require('sequelize');
 const asyncHandler = require('express-async-handler');
 
 const app = express();
 const router = express.Router();
 
-require('dotenv').config({ path: 'config.env' });
+const seq = require('./sequelize');
+const sequelize = seq.sequelize;
 
-const con = {
-  host: 'localhost',
-  user: 'root',
-  password: process.env.SQL_PASSWD,
-  database: 'x_byte',
-  port: 3306,
-};
+const a = require('./tables/articles');
+const Articles = a.Articles;
 
-const sequelize = new Sequelize(con.database, con.user, con.password, {
-  host: con.host,
-  dialect: 'mysql',
-  define: {
-    timestamps: false,
-  },
-});
+const u = require('./tables/users');
+const Users = u.Users;
+
+const c = require('./tables/courses');
+const Courses = c.Courses;
+
+const cm = require('./tables/comments');
+const Comments = cm.Comments;
 
 sequelize
   .authenticate()
@@ -32,23 +28,32 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-const Article = sequelize.define('article', {
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  content: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
-});
-
+//
 const getArticles = async () => {
-  return Article.findAll({
-    order: [['id', 'DESC']],
-  }).then(articles => {
-    return articles;
-  });
+  return Articles.findAll({
+    order: [['articleId', 'DESC']],
+  }).then(articles => articles);
+};
+
+//
+const getUsers = async () => {
+  return Users.findAll({
+    order: [['userId', 'DESC']],
+  }).then(users => users);
+};
+
+//
+const getCourses = async () => {
+  return Courses.findAll({
+    order: [['courseId', 'DESC']],
+  }).then(courses => courses);
+};
+
+//
+const getComments = async () => {
+  return Comments.findAll({
+    order: [['commentId', 'DESC']],
+  }).then(comments => comments);
 };
 
 router.get('/*', function(req, res, next) {
@@ -60,6 +65,27 @@ router.get(
   '/articles',
   asyncHandler(async (req, res, next) => {
     res.json(await getArticles());
+  })
+);
+
+router.get(
+  '/users',
+  asyncHandler(async (req, res, next) => {
+    res.json(await getUsers());
+  })
+);
+
+router.get(
+  '/courses',
+  asyncHandler(async (req, res, next) => {
+    res.json(await getCourses());
+  })
+);
+
+router.get(
+  '/comments',
+  asyncHandler(async (req, res, next) => {
+    res.json(await getComments());
   })
 );
 
