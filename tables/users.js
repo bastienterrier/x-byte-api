@@ -33,6 +33,23 @@ const Users = sequelize.define('users', {
   },
 });
 
+//
+const getUsers = async () => {
+  return Users.findAll({
+    order: [['userId', 'DESC']],
+  }).then(users => users);
+};
+
+const addUser = async user => {
+  try {
+    return Users.create(user).then(user => user);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Users,
+  getUsers,
+  addUser,
 };

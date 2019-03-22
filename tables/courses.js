@@ -34,6 +34,23 @@ const Courses = sequelize.define('courses', {
   },
 });
 
+//
+const getCourses = async () => {
+  return Courses.findAll({
+    order: [['courseId', 'DESC']],
+  }).then(courses => courses);
+};
+
+const addCourse = async course => {
+  try {
+    return Courses.create(course).then(course => course);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Courses,
+  getCourses,
+  addCourse,
 };

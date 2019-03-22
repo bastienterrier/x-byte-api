@@ -1,3 +1,10 @@
+-- DROP TABLE
+DROP TABLE Comments;
+DROP TABLE Articles;
+DROP TABLE Courses;
+DROP TABLE Users;
+
+
 CREATE TABLE Users(
     userId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userRole ENUM('reader', 'writer', 'admin') NOT NULL,
@@ -38,12 +45,6 @@ CREATE TABLE Comments(
     FOREIGN KEY (commentArticle) REFERENCES Articles(articleId)
 );
 
--- DROP TABLE
-DROP TABLE Comments;
-DROP TABLE Articles;
-DROP TABLE Courses;
-DROP TABLE Users;
-
 -- INSERT INTO
 INSERT INTO Users(userRole,userPseudo,userPassword) VALUES('admin', 'bastien', 'bterrier');
 INSERT INTO Users(userRole,userPseudo,userPassword) VALUES('writer', 'cedric', 'cbarret');
@@ -52,6 +53,7 @@ INSERT INTO Users(userRole,userPseudo,userPassword) VALUES('writer', 'gwenael', 
 
 INSERT INTO Courses(courseName, courseDescription, courseStatus, courseWriter) VALUES('Vim Byte', "Kevin shank swine anim.  Salami consequat kevin kielbasa pariatur culpa shankle biltong beef nostrud pig occaecat sed.  Beef ribs magna flank shankle prosciutto dolore esse eu brisket drumstick jerky buffalo.  Laborum doner short ribs, biltong labore fatback sunt tri-tip aliquip tempor.  Fugiat tri-tip filet mignon pork pig, landjaeger frankfurter velit enim ground round voluptate anim.  Ea cupim sausage occaecat salami beef ribs velit esse tenderloin tail fugiat.", 'validated', 2);
 INSERT INTO Courses(courseName, courseDescription, courseStatus, courseWriter) VALUES('Regexp Byte', "Laboris irure aliqua consequat pastrami.  Porchetta consectetur buffalo turkey leberkas fugiat ea shoulder reprehenderit irure culpa.  Eiusmod beef ex fugiat sed biltong duis tri-tip.  Irure mollit nisi adipisicing beef ribs jerky andouille picanha velit fatback anim t-bone minim leberkas turducken.  Sirloin nostrud aliqua, laborum chuck short ribs flank adipisicing deserunt dolore consectetur ribeye buffalo ad.  Incididunt venison andouille, brisket rump dolor ham ribeye cillum nisi capicola.", 'validated', 4);
+INSERT INTO Courses(courseName, courseDescription, courseStatus, courseWriter) VALUES('C-WAV Byte', "Cupidatat tail porchetta tongue cillum eiusmod shoulder landjaeger short loin culpa ut consequat veniam.  Salami meatloaf turducken alcatra tempor jerky pancetta nostrud id cow tail nulla quis hamburger.", 'validated', 2);
 
 INSERT INTO Articles(articleTitle, articlePreface, articleContent, articleStatus, articleWriter, articleCourse)
 VALUES(
@@ -80,11 +82,25 @@ VALUES(
     4,
     2
 );
-
+INSERT INTO Articles(articleTitle, articlePreface, articleContent, articleStatus, articleWriter, articleCourse)
+VALUES(
+    'Regexp 02',
+    'Short loin ut ut, meatloaf rump exercitation in in strip steak kevin short ribs et proident.  Shoulder deserunt laboris, incididunt ipsum et pariatur minim non magna aliqua t-bone lorem drumstick beef ribs.  Magna short loin ut pastrami sirloin pork belly.  Veniam short ribs incididunt fugiat in cupidatat meatloaf non sed ut laboris ball tip nulla landjaeger.  Ut do kielbasa occaecat tempor tri-tip ut beef ribs.',
+    'Beef ribs aliqua meatball pork belly, frankfurter labore fatback laborum landjaeger lorem kevin ground round occaecat.  Bresaola nulla fugiat consequat nostrud.  Dolore shank excepteur sed.  Proident short ribs fatback pork chop shoulder.  In prosciutto porchetta cupim tri-tip aliquip eiusmod incididunt biltong cillum short loin tenderloin tail.  Drumstick voluptate incididunt ut, pork chop consequat laboris shank chicken duis short ribs pork belly beef turducken.',    'validated',
+    1,
+    2
+);
 INSERT INTO Comments(comment, commentStatus, commentWriter, commentArticle)
 VALUES(
     'Super article, merci !',
     'validated',
     3,
+    2
+);
+INSERT INTO Comments(comment, commentStatus, commentWriter, commentArticle)
+VALUES(
+    "Merci, j'ai tout compris maintenant ahah !",
+    'validated',
+    1,
     2
 );

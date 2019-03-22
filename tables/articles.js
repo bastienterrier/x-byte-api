@@ -48,6 +48,22 @@ const Articles = sequelize.define('articles', {
   },
 });
 
+//
+const getArticles = async () => {
+  return Articles.findAll({
+    order: [['articleId', 'DESC']],
+  }).then(articles => articles);
+};
+
+const addArticle = async article => {
+  try {
+    return Articles.create(article).then(article => article);
+  } catch (e) {
+    throw e;
+  }
+};
 module.exports = {
   Articles,
+  getArticles,
+  addArticle,
 };

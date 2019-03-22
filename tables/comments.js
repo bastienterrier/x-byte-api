@@ -40,6 +40,23 @@ const Comments = sequelize.define('comments', {
   },
 });
 
+//
+const getComments = async () => {
+  return Comments.findAll({
+    order: [['commentId', 'DESC']],
+  }).then(comments => comments);
+};
+
+const addComment = async comment => {
+  try {
+    return Comments.create(comment).then(comment => comment);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Comments,
+  getComments,
+  addComment,
 };
