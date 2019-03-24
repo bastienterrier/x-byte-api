@@ -3,7 +3,6 @@ const Sequelize = require('sequelize');
 const sequelize = seq.sequelize;
 
 const enums = require('./enums');
-const RoleEnum = enums.RoleEnum;
 
 const Users = sequelize.define('users', {
   userId: {
@@ -12,16 +11,12 @@ const Users = sequelize.define('users', {
     autoIncrement: true,
   },
   userRole: {
-    type: RoleEnum,
+    type: enums.RoleEnum,
     allowNull: false,
   },
-  userIsMute: {
-    type: Sequelize.BOOLEAN,
-    allowNull: true,
-  },
-  userMuteReason: {
-    type: Sequelize.STRING,
-    allowNull: true,
+  userStatus: {
+    type: enums.UserStatusEnum,
+    allowNull: false,
   },
   userPseudo: {
     type: Sequelize.STRING,
@@ -48,8 +43,27 @@ const addUser = async user => {
   }
 };
 
+const deleteUser = async user => {
+  // set userStatus to 'banned'
+  try {
+    return Users.update(
+      {
+        userStatus: 'banned',
+      },
+      {
+        where: {
+          userId: user.userId,
+        },
+      }
+    );
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Users,
   getUsers,
   addUser,
+  deleteUser,
 };

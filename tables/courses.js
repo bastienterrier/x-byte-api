@@ -49,8 +49,27 @@ const addCourse = async course => {
   }
 };
 
+const deleteCourse = async course => {
+  // set courseStatus to 'removed'
+  try {
+    return Courses.update(
+      {
+        courseStatus: 'removed',
+      },
+      {
+        where: {
+          courseId: course.courseId,
+        },
+      }
+    );
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Courses,
   getCourses,
   addCourse,
+  deleteCourse,
 };

@@ -1,15 +1,14 @@
--- DROP TABLE
+-- DROP TABLES
 DROP TABLE Comments;
 DROP TABLE Articles;
 DROP TABLE Courses;
 DROP TABLE Users;
 
-
+-- CREATE TABLES
 CREATE TABLE Users(
     userId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userRole ENUM('reader', 'writer', 'admin') NOT NULL,
-    userIsMute BOOLEAN,
-    userMuteReason VARCHAR(255),
+    userStatus ENUM('active', 'inactive', 'banned') NOT NULL,
     userPseudo VARCHAR(255) UNIQUE NOT NULL,
     userPassword VARCHAR(255) NOT NULL
 );

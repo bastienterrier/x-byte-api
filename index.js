@@ -38,6 +38,7 @@ router.get('/*', function(req, res, next) {
   next();
 });
 
+// Articles
 router
   .route('/articles')
   .get(
@@ -63,28 +64,141 @@ router
         res.json(e);
       }
     })
+  )
+  .delete(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const article = {
+          articleId: req.body.articleId,
+        };
+        res.status(200);
+        res.json(await a.deleteArticle(utils.nullifyEmptyProperties(article)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
   );
 
-router.get(
-  '/users',
-  asyncHandler(async (req, res, next) => {
-    res.json(await u.getUsers());
-  })
-);
+// Users
+router
+  .route('/users')
+  .get(
+    asyncHandler(async (req, res, next) => {
+      res.json(await u.getUsers());
+    })
+  )
+  .post(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const user = {
+          userRole: 'reader',
+          userStatus: 'active',
+          userPseudo: req.body.userPseudo,
+          userPassword: req.body.userPassword,
+        };
+        res.status(200);
+        res.json(await u.addUser(utils.nullifyEmptyProperties(user)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  )
+  .delete(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const user = {
+          userId: req.body.userId,
+        };
+        res.status(200);
+        res.json(await u.deleteUser(utils.nullifyEmptyProperties(user)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  );
 
-router.get(
-  '/courses',
-  asyncHandler(async (req, res, next) => {
-    res.json(await c.getCourses());
-  })
-);
+// Courses
+router
+  .route('/courses')
+  .get(
+    asyncHandler(async (req, res, next) => {
+      res.json(await c.getCourses());
+    })
+  )
+  .post(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const course = {
+          courseName: req.body.courseName,
+          courseDescription: req.body.courseDescription,
+          courseStatus: 'waitingForValidation',
+          courseWriter: req.body.courseWriter,
+        };
+        res.status(200);
+        res.json(await c.addCourse(utils.nullifyEmptyProperties(course)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  )
+  .delete(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const course = {
+          courseId: req.body.courseId,
+        };
+        res.status(200);
+        res.json(await c.deleteCourse(utils.nullifyEmptyProperties(course)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  );
 
-router.get(
-  '/comments',
-  asyncHandler(async (req, res, next) => {
-    res.json(await cm.getComments());
-  })
-);
+// Comments
+router
+  .route('/comments')
+  .get(
+    asyncHandler(async (req, res, next) => {
+      res.json(await cm.getComments());
+    })
+  )
+  .post(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const comment = {
+          comment: req.body.comment,
+          commentStatus: 'waitingForValidation',
+          commentWriter: req.body.commentWriter,
+          commentArticle: req.body.commentArticle,
+        };
+        res.status(200);
+        res.json(await cm.addComment(utils.nullifyEmptyProperties(comment)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  )
+  .delete(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const comment = {
+          commentId: req.body.commentId,
+        };
+        res.status(200);
+        res.json(await cm.deleteComment(utils.nullifyEmptyProperties(comment)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  );
 
 app.use(router);
 
@@ -94,6 +208,7 @@ const server = app.listen(port, hostname, function() {
   console.log('Server running at http://' + hostname + ':' + port);
 });
 
+/*
 const io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function(socket) {
@@ -101,3 +216,4 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('message', message);
   });
 });
+*/

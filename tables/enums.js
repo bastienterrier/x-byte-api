@@ -11,7 +11,14 @@ const RoleEnum = {
   admin: 'admin',
 };
 
+const UserStatusEnum = {
+  active: 'active',
+  inactive: 'inactive',
+  banned: 'banned',
+};
+
 module.exports = {
   StatusEnum,
   RoleEnum,
+  UserStatusEnum,
 };

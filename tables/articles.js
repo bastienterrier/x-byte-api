@@ -62,8 +62,28 @@ const addArticle = async article => {
     throw e;
   }
 };
+
+const deleteArticle = async article => {
+  // set articleStatus to 'removed'
+  try {
+    return Articles.update(
+      {
+        articleStatus: 'removed',
+      },
+      {
+        where: {
+          articleId: article.articleId,
+        },
+      }
+    );
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Articles,
   getArticles,
   addArticle,
+  deleteArticle,
 };

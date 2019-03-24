@@ -55,8 +55,27 @@ const addComment = async comment => {
   }
 };
 
+const deleteComment = async comment => {
+  // set commentStatus to 'removed'
+  try {
+    return Comments.update(
+      {
+        commentStatus: 'removed',
+      },
+      {
+        where: {
+          commentId: comment.commentId,
+        },
+      }
+    );
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Comments,
   getComments,
   addComment,
+  deleteComment,
 };
