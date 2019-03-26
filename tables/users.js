@@ -61,9 +61,22 @@ const deleteUser = async user => {
   }
 };
 
+const updateUser = async user => {
+  try {
+    return Users.update(user, {
+      where: {
+        userId: user.userId,
+      },
+    }).then(user => user);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Users,
   getUsers,
   addUser,
   deleteUser,
+  updateUser,
 };

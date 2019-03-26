@@ -16,7 +16,20 @@ function nullifyEmptyProperties(obj) {
   return newObj;
 }
 
+function removeEmptyProperties(obj) {
+  let newObj = {};
+  Object.getOwnPropertyNames(obj).forEach(key => {
+    let value = obj[key];
+
+    if (!isNullOrEmpty(value)) {
+      newObj[key] = value;
+    }
+  });
+  return newObj;
+}
+
 module.exports = {
   isNullOrEmpty,
   nullifyEmptyProperties,
+  removeEmptyProperties,
 };

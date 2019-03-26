@@ -78,6 +78,24 @@ router
         res.json(e);
       }
     })
+  )
+  .put(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const article = {
+          articleId: req.body.articleId,
+          articleTitle: req.body.articleTitle,
+          articlePreface: req.body.articlePreface,
+          articleContent: req.body.articleContent,
+          articleStatus: req.body.articleStatus,
+        };
+        res.status(200);
+        res.json(await a.updateArticle(utils.removeEmptyProperties(article)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
   );
 
 // Users
@@ -113,6 +131,24 @@ router
         };
         res.status(200);
         res.json(await u.deleteUser(utils.nullifyEmptyProperties(user)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  )
+  .put(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const user = {
+          userId: req.body.userId,
+          userRole: req.body.userRole,
+          userStatus: req.body.userStatus,
+          userPseudo: req.body.userPseudo,
+          userPassword: req.body.userPassword,
+        };
+        res.status(200);
+        res.json(await u.updateUser(utils.removeEmptyProperties(user)));
       } catch (e) {
         res.status(412);
         res.json(e);
@@ -158,6 +194,22 @@ router
         res.json(e);
       }
     })
+  )
+  .put(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const course = {
+          courseId: req.body.courseId,
+          courseDescription: req.body.courseDescription,
+          courseStatus: req.body.courseStatus,
+        };
+        res.status(200);
+        res.json(await c.updateCourse(utils.removeEmptyProperties(course)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
   );
 
 // Comments
@@ -193,6 +245,22 @@ router
         };
         res.status(200);
         res.json(await cm.deleteComment(utils.nullifyEmptyProperties(comment)));
+      } catch (e) {
+        res.status(412);
+        res.json(e);
+      }
+    })
+  )
+  .put(
+    asyncHandler(async (req, res, next) => {
+      try {
+        const comment = {
+          commentId: req.body.commentId,
+          comment: req.body.comment,
+          commentStatus: req.body.commentStatus,
+        };
+        res.status(200);
+        res.json(await cm.updateComment(utils.removeEmptyProperties(comment)));
       } catch (e) {
         res.status(412);
         res.json(e);

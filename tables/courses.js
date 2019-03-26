@@ -61,7 +61,19 @@ const deleteCourse = async course => {
           courseId: course.courseId,
         },
       }
-    );
+    ).then(course => course);
+  } catch (e) {
+    throw e;
+  }
+};
+
+const updateCourse = async course => {
+  try {
+    return Courses.update(course, {
+      where: {
+        courseId: course.courseId,
+      },
+    }).then(course => course);
   } catch (e) {
     throw e;
   }
@@ -72,4 +84,5 @@ module.exports = {
   getCourses,
   addCourse,
   deleteCourse,
+  updateCourse,
 };

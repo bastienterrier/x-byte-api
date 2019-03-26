@@ -73,9 +73,22 @@ const deleteComment = async comment => {
   }
 };
 
+const updateComment = async comment => {
+  try {
+    return Comments.update(comment, {
+      where: {
+        commentId: comment.commentId,
+      },
+    }).then(comment => comment);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Comments,
   getComments,
   addComment,
   deleteComment,
+  updateComment,
 };
