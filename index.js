@@ -10,6 +10,8 @@ app.use(
     extended: true,
   })
 );
+const cors = require('cors');
+app.use(cors());
 const router = express.Router();
 
 const seq = require('./sequelize');
@@ -31,12 +33,6 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
-
-router.get('/*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-});
 
 // Articles
 router
@@ -109,6 +105,7 @@ router
   .post(
     asyncHandler(async (req, res, next) => {
       try {
+        console.log(req.body);
         const user = {
           userRole: 'reader',
           userStatus: 'active',
@@ -116,6 +113,7 @@ router
           userPassword: req.body.userPassword,
         };
         res.status(200);
+        res.header('Access-Control-Allow-Origin', '*');
         res.json(await u.addUser(utils.nullifyEmptyProperties(user)));
       } catch (e) {
         res.status(412);
@@ -267,6 +265,22 @@ router
       }
     })
   );
+
+router.route('/login').post(
+  asyncHandler(async (req, res, next) => {
+    try {
+      const user = {
+        userPseudo: req.body.userPseudo,
+        userPassword: req.body.userPassword,
+      };
+      res.status(200);
+      res.json(await u.getUserByLogin(utils.removeEmptyProperties(user)));
+    } catch (e) {
+      res.status(412);
+      res.json(e);
+    }
+  })
+);
 
 app.use(router);
 

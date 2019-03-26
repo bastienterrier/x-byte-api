@@ -73,10 +73,24 @@ const updateUser = async user => {
   }
 };
 
+const getUserByLogin = async user => {
+  try {
+    return Users.findAll({
+      where: {
+        userPassword: user.userPassword,
+        userPseudo: user.userPseudo,
+      },
+    });
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   Users,
   getUsers,
   addUser,
   deleteUser,
   updateUser,
+  getUserByLogin,
 };
