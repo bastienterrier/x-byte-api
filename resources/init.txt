@@ -1,0 +1,45 @@
+@startuml
+
+class Article{
+    articleId: int
+    articleTitle: string
+    articlePreface: text
+    articleContent: text
+    articleStatus: Status
+}
+
+class Course{
+    courseId: int
+    courseName: string
+    courseDescription: text
+    courseStatus: Status
+}
+
+class Comment{
+    commentId: int
+    comment: text
+    commentStatus: Status
+}
+
+class User{
+    userId: int
+    userRole: reader|admin|writer
+    userStatus: active|inactive|banned
+    userPseudo: string
+    userPassword: string
+}
+
+object Status{
+    type: validated|waitingForValidation|removed|beingWritten
+}
+
+Comment "0..N" -left-* "1" Article: is about >
+Article "1..N" -left-* "1" Course : belong to >
+
+User -- Article: writer can write >
+User -- Comment: reader can write >
+User -- Course: admin can create >
+
+
+
+@enduml
